@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import axios from "axios"
+import API from "../services/api"
 import { useNavigate } from "react-router-dom"
 
 function Dashboard() {
@@ -20,8 +20,8 @@ function Dashboard() {
 
         try {
 
-            const response = await axios.get(
-                "http://127.0.0.1:8000/tasks/",
+            const response = await API.get(
+                "/tasks/",
                 {
                     headers: {
                         Authorization:
@@ -47,8 +47,8 @@ function Dashboard() {
 
         try {
 
-            await axios.post(
-                "http://127.0.0.1:8000/tasks/create-task",
+            await API.post(
+                "/tasks/create-task",
                 {
                     title,
                     description
@@ -79,8 +79,8 @@ function Dashboard() {
 
         try {
 
-            await axios.put(
-                `http://127.0.0.1:8000/tasks/update-task/${editingTaskId}`,
+            await API.put(
+                `/tasks/update-task/${editingTaskId}`,
                 {
                     title,
                     description
@@ -113,8 +113,8 @@ function Dashboard() {
 
         try {
 
-            await axios.put(
-                `http://127.0.0.1:8000/tasks/complete-task/${taskId}`,
+            await API.put(
+                `/tasks/complete-task/${taskId}`,
                 {},
                 {
                     headers: {
@@ -139,8 +139,8 @@ function Dashboard() {
 
         try {
 
-            await axios.delete(
-                `http://127.0.0.1:8000/tasks/delete-task/${taskId}`,
+            await API.delete(
+                `/tasks/delete-task/${taskId}`,
                 {
                     headers: {
                         Authorization:
