@@ -23,10 +23,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# DELETE OLD DATABASE TO FIX PASSWORD HASHING ISSUE
-if os.path.exists("task.db"):
-    os.remove("task.db")
-
 # CREATE DATABASE TABLES
 Base.metadata.create_all(bind=engine)
 
