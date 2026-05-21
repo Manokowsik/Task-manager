@@ -1,3 +1,4 @@
+
 # Task Manager Application
 
 A full-stack task management application with user authentication, real-time task tracking, and a modern responsive UI.
@@ -332,3 +333,6 @@ For support, questions, or issues, please create an issue in the repository or c
 
 **Last Updated**: May 2026
 **Version**: 1.0.0
+=======
+# Task-manager
+5560c191d9af780fdc4714bf53b417ffd167a152
