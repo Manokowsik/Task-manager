@@ -50,11 +50,18 @@ def register_user(
         password=hashed_password
     )
 
-    db.add(new_user)
+    from sqlalchemy.exc import IntegrityError
 
-    db.commit()
-
-    db.refresh(new_user)
+    try:
+        db.add(new_user)
+        db.commit()
+        db.refresh(new_user)
+    except IntegrityError:
+        db.rollback()
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="Email or username already exists"
+        )
 
     return {
         "message": "User registered successfully"

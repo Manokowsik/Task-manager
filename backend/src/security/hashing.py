@@ -15,9 +15,25 @@ def verify_password(
     plain_password: str,
     hashed_password: str
 ) -> bool:
-    # Pre-hash with SHA256 to match the stored hash
+    # 1. Try with SHA256 pre-hash (for users registered with current/new scheme)
     sha256_hash = hashlib.sha256(plain_password.encode()).hexdigest()
-    return bcrypt.checkpw(
-        sha256_hash.encode(),
-        hashed_password.encode()
-    )
+    try:
+        if bcrypt.checkpw(
+            sha256_hash.encode(),
+            hashed_password.encode()
+        ):
+            return True
+    except Exception:
+        pass
+
+    # 2. Try without SHA256 pre-hash (for legacy users registered with the old passlib/bcrypt scheme)
+    try:
+        if bcrypt.checkpw(
+            plain_password.encode(),
+            hashed_password.encode()
+        ):
+            return True
+    except Exception:
+        pass
+
+    return False
