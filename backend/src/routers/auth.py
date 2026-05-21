@@ -75,20 +75,26 @@ def login_user(
     db: Session = Depends(get_db)
 ):
 
+    print(f"[DEBUG LOGIN] Attempting login for email/username: '{form_data.username}'")
     existing_user = db.query(User).filter(
         User.email == form_data.username
     ).first()
 
     if not existing_user:
+        print(f"[DEBUG LOGIN] User with email '{form_data.username}' NOT found in database.")
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid email"
         )
 
+    print(f"[DEBUG LOGIN] User found: '{existing_user.username}', stored hash: '{existing_user.password}'")
+
     valid_password = verify_password(
         form_data.password,
         existing_user.password
     )
+
+    print(f"[DEBUG LOGIN] Password verification result: {valid_password}")
 
     if not valid_password:
         raise HTTPException(
