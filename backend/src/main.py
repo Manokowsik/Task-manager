@@ -9,21 +9,29 @@ app = FastAPI(
     title="Task Manager API"
 )
 
+# CORS SETTINGS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
+    allow_origins=[
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+        "https://task-manager-wllb.vercel.app"
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
+# CREATE DATABASE TABLES
 Base.metadata.create_all(bind=engine)
 
-app.include_router(task_router)
+# ROUTERS
 app.include_router(auth_router)
+app.include_router(task_router)
 
+# HOME ROUTE
 @app.get("/")
 def home():
     return {
-        "message": "Database connected"
+        "message": "Task Manager API Running Successfully"
     }
