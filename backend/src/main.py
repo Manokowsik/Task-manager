@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+import os
 
 from src.database import engine, Base
 from src.routers.task import router as task_router
@@ -21,6 +22,10 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# DELETE OLD DATABASE TO FIX PASSWORD HASHING ISSUE
+if os.path.exists("task.db"):
+    os.remove("task.db")
 
 # CREATE DATABASE TABLES
 Base.metadata.create_all(bind=engine)
