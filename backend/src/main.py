@@ -15,7 +15,7 @@ app.add_middleware(
     allow_origins=[
         "http://localhost:5173",
         "http://127.0.0.1:5173",
-        "https://task-manager-fjpo4ma74-manokowsik-task-management.vercel.app"
+        "https://task-manager-ecru-iota.vercel.app"
     ],
     allow_credentials=True,
     allow_methods=["*"],
